@@ -1,6 +1,7 @@
 package org.example.candidate.Controllers;
 
 import jakarta.validation.Valid;
+import org.example.candidate.Models.Dto.ApiResponse;
 import org.example.candidate.Models.Dto.CandidateCreateDTO;
 import org.example.candidate.Models.Entity.Candidate;
 import org.example.candidate.Repositories.CandidateRepository;
@@ -14,7 +15,7 @@ public class CandidateController {
     private CandidateRepository candidateRepository;
 
     @PostMapping
-    public Candidate createCandidate(
+    public ApiResponse<Candidate> create(
             @Valid @RequestBody CandidateCreateDTO dto) {
 
         Candidate candidate = new Candidate();
@@ -24,6 +25,12 @@ public class CandidateController {
         candidate.setAge(dto.getAge());
         candidate.setYearsOfExperience(dto.getYearsOfExperience());
 
-        return candidateRepository.save(candidate);
+        Candidate saved = candidateRepository.save(candidate);
+
+        return new ApiResponse<>(
+                "SUCCESS",
+                "Create candidate successfully",
+                saved
+        );
     }
 }
