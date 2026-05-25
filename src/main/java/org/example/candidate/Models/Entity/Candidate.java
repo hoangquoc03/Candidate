@@ -3,8 +3,9 @@ package org.example.candidate.Models.Entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name ="candidates")
+@Table(name = "candidates")
 public class Candidate {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -17,16 +18,14 @@ public class Candidate {
 
     private Integer yearsOfExperience;
 
-    public Candidate() {
-    }
+    // NEW
+    private String address;
 
-    public Candidate(Integer id, String fullName, String email,
-                     Integer age, Integer yearsOfExperience) {
-        this.id = id;
-        this.fullName = fullName;
-        this.email = email;
-        this.age = age;
-        this.yearsOfExperience = yearsOfExperience;
+    // NEW
+    @Column(length = 200)
+    private String bio;
+
+    public Candidate() {
     }
 
     public Integer getId() {
@@ -67,5 +66,21 @@ public class Candidate {
 
     public void setYearsOfExperience(Integer yearsOfExperience) {
         this.yearsOfExperience = yearsOfExperience;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import org.springframework.validation.BindException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +31,28 @@ public class GlobalExceptionHandler {
                     String message = error.getDefaultMessage();
 
                     errors.put(field, message);
+                });
+
+        return new ApiResponse<>(
+                "ERROR",
+                "Validation failed",
+                errors
+        );
+    }
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(BindException.class)
+    public ApiResponse<Map<String, String>>
+    handleBindException(BindException ex) {
+
+        Map<String, String> errors = new HashMap<>();
+
+        ex.getBindingResult()
+                .getFieldErrors()
+                .forEach(error -> {
+                    errors.put(
+                            error.getField(),
+                            error.getDefaultMessage()
+                    );
                 });
 
         return new ApiResponse<>(

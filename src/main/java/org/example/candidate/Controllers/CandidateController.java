@@ -3,6 +3,7 @@ package org.example.candidate.Controllers;
 import jakarta.validation.Valid;
 import org.example.candidate.Models.Dto.ApiResponse;
 import org.example.candidate.Models.Dto.CandidateCreateDTO;
+import org.example.candidate.Models.Dto.CandidateUpdateDTO;
 import org.example.candidate.Models.Entity.Candidate;
 import org.example.candidate.Repositories.CandidateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,30 @@ public class CandidateController {
                 "SUCCESS",
                 "Create candidate successfully",
                 saved
+        );
+    }
+    @PutMapping("/update/{id}")
+    public ApiResponse<Candidate> updateCandidate(
+            @PathVariable Integer id,
+
+            @Valid
+            @ModelAttribute CandidateUpdateDTO dto
+    ) {
+
+        Candidate candidate = candidateRepository
+                .findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Candidate not found"));
+
+        candidate.setAddress(dto.getAddress());
+        candidate.setBio(dto.getBio());
+
+        Candidate updated = candidateRepository.save(candidate);
+
+        return new ApiResponse<>(
+                "SUCCESS",
+                "Update candidate successfully",
+                updated
         );
     }
 }
