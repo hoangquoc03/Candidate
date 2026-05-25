@@ -61,4 +61,15 @@ public class GlobalExceptionHandler {
                 errors
         );
     }
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ApiResponse<String>
+    handleIllegalArgumentException(IllegalArgumentException ex) {
+
+        return new ApiResponse<>(
+                "ERROR",
+                ex.getMessage(),
+                null
+        );
+    }
 }
