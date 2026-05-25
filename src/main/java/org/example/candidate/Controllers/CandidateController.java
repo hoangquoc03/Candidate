@@ -25,7 +25,7 @@ public class CandidateController {
         candidate.setEmail(dto.getEmail());
         candidate.setAge(dto.getAge());
         candidate.setYearsOfExperience(dto.getYearsOfExperience());
-
+        candidate.setPhone(dto.getPhone());
         Candidate saved = candidateRepository.save(candidate);
 
         return new ApiResponse<>(

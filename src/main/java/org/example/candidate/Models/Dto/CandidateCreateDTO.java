@@ -1,25 +1,31 @@
 package org.example.candidate.Models.Dto;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 public class CandidateCreateDTO {
-    @NotBlank(message = "Full name không được để trống")
-    @Size(min =5,max = 50, message = "Full name phải từ 5 đến 50 ký tự ")
+    @NotBlank(message = "Tên không được để trống")
+    @Size(min = 5, max = 50,
+            message = "Tên phải từ 5 đến 50 ký tự")
     private String fullName;
+
     @NotBlank(message = "Email không được để trống")
     @Email(message = "Email không đúng định dạng")
     private String email;
 
     @Min(value = 18,
-            message = "Ứng viên phải từ 18 tuổi")
+            message = "Tuổi phải >= 18")
     private Integer age;
 
     @Min(value = 0,
-            message = "Số năm kinh nghiệm phải >= 0")
+            message = "Kinh nghiệm phải >= 0")
     private Integer yearsOfExperience;
+
+
+    @Pattern(
+            regexp = "^(03|05|07|08|09)[0-9]{8}$",
+            message = "Số điện thoại không hợp lệ"
+    )
+    private String phone;
 
     public CandidateCreateDTO() {
     }
@@ -54,5 +60,13 @@ public class CandidateCreateDTO {
 
     public void setYearsOfExperience(Integer yearsOfExperience) {
         this.yearsOfExperience = yearsOfExperience;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

@@ -18,14 +18,22 @@ public class Candidate {
 
     private Integer yearsOfExperience;
 
-    // NEW
-    private String address;
 
-    // NEW
+    private String address;
+    private String phone;
+
     @Column(length = 200)
     private String bio;
 
     public Candidate() {
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public Integer getId() {
